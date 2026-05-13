@@ -1,5 +1,13 @@
 import conexao from "../config/db.js";
 
+export const criarTreino = async (aluno_id, instrutor_id, nome_treino, descricao, data_inicio, data_fim) => {
+    const [resultado] = await conexao.query(
+        "INSERT INTO treinos (aluno_id, instrutor_id, nome_treino, descricao, data_inicio, data_fim) VALUES (?, ?, ?, ?, ?, ?)",
+        [aluno_id, instrutor_id, nome_treino, descricao, data_inicio, data_fim ?? null]
+    );
+    return resultado;
+};
+
 export const buscarTreinos = async () => {
     const [rows] = await conexao.query(`
         SELECT t.*, a.nome AS aluno, i.nome AS instrutor
@@ -10,10 +18,10 @@ export const buscarTreinos = async () => {
     return rows;
 };
 
-export const atualizarTreino = async (id, aluno_id, instrutor_id, descricao, data_inicio) => {
+export const atualizarTreino = async (id, aluno_id, instrutor_id, nome_treino, descricao, data_inicio, data_fim) => {
     const [resultado] = await conexao.query(
-        `UPDATE treinos SET aluno_id=?, instrutor_id=?, descricao=?, data_inicio=? WHERE id=?`,
-        [aluno_id, instrutor_id, descricao, data_inicio, id]
+        `UPDATE treinos SET aluno_id=?, instrutor_id=?, nome_treino=?, descricao=?, data_inicio=?, data_fim=? WHERE id=?`,
+        [aluno_id, instrutor_id, nome_treino, descricao, data_inicio, data_fim, id]
     );
     return resultado;
 };

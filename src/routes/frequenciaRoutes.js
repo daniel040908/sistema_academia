@@ -7,16 +7,16 @@ import {
 } from "../controllers/frequenciaController.js";
 import { verificarToken } from "../middlewares/authmiddleware.js";
 import { validarFrequencia } from "../middlewares/frequenciamiddleware.js";
-
+ 
 const router = Router();
-
+ 
 /**
  * @swagger
  * tags:
  *   name: Frequencias
  *   description: Controle de frequência dos alunos
  */
-
+ 
 /**
  * @swagger
  * /frequencias:
@@ -32,7 +32,7 @@ const router = Router();
  *         description: Não autorizado
  */
 router.get("/", verificarToken, listarFrequencias);
-
+ 
 /**
  * @swagger
  * /frequencias:
@@ -59,6 +59,9 @@ router.get("/", verificarToken, listarFrequencias);
  *               presente:
  *                 type: boolean
  *                 example: true
+ *               observacao:
+ *                 type: string
+ *                 example: "pouco frequente"
  *     responses:
  *       201:
  *         description: Frequência registrada
@@ -68,7 +71,7 @@ router.get("/", verificarToken, listarFrequencias);
  *         description: Não autorizado
  */
 router.post("/", verificarToken, validarFrequencia, registrarFrequencia);
-
+ 
 /**
  * @swagger
  * /frequencias/{id}:
@@ -97,6 +100,8 @@ router.post("/", verificarToken, validarFrequencia, registrarFrequencia);
  *                 format: date
  *               presente:
  *                 type: boolean
+ *               observacao:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Frequência atualizada
@@ -106,7 +111,7 @@ router.post("/", verificarToken, validarFrequencia, registrarFrequencia);
  *         description: Não autorizado
  */
 router.put("/:id", verificarToken, validarFrequencia, atualizarFrequencia);
-
+ 
 /**
  * @swagger
  * /frequencias/{id}:
@@ -130,5 +135,5 @@ router.put("/:id", verificarToken, validarFrequencia, atualizarFrequencia);
  *         description: Não autorizado
  */
 router.delete("/:id", verificarToken, deletarFrequencia);
-
+ 
 export default router;
